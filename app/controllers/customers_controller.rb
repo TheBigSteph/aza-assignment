@@ -18,7 +18,9 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     if @customer.save
-      render json: @customer, status: :created, location: @customer
+      token = JsonWebToken.encode(customer_id: @customer.id)
+      time = Time.now + 2400.hours.to_i
+      render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"), data: @customer }, status: :ok
     else
       render json: @customer.errors, status: :unprocessable_entity
     end
