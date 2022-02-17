@@ -10,7 +10,12 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/1
   def show
-    render json: @transaction
+    customer_id = @transaction.customer_id
+    if customer_id.present?
+      render json: @transaction
+    else
+      render json: {error: "this user not exist"}
+    end
   end
 
   # POST /transactions

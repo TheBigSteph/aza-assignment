@@ -93,7 +93,7 @@ RSpec.describe "/customers", type: :request do
       let(:new_attributes) {
         {
           id: 1,
-          fullname: 'John Doe',
+          fullname: 'Paul Luc',
           email: 'john@gmail.com'
         }
       }
@@ -103,7 +103,7 @@ RSpec.describe "/customers", type: :request do
         patch customer_url(customer),
               params: { customer: new_attributes }, headers: valid_headers, as: :json
         customer.reload
-        skip("Add assertions for updated state")
+        expect(customer.fullname).to eq("Paul Luc")
       end
 
       it "renders a JSON response with the customer" do

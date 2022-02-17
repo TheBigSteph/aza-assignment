@@ -101,7 +101,7 @@ RSpec.describe "/transactions", type: :request do
           id: 1,
           customer_id: 1,
           input_amount: 100,
-          input_currency: "EUR",
+          input_currency: "USD",
           output_amount: 55000,
           output_currency: "XAF"
         }
@@ -112,7 +112,7 @@ RSpec.describe "/transactions", type: :request do
         patch transaction_url(transaction),
               params: { transaction: new_attributes }, headers: valid_headers, as: :json
         transaction.reload
-        skip("Add assertions for updated state")
+        expect(transaction.input_currency).to eq("USD")
       end
 
       it "renders a JSON response with the transaction" do
