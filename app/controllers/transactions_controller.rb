@@ -43,6 +43,16 @@ class TransactionsController < ApplicationController
     @transaction.destroy
   end
 
+  def get_transaction_by_customer
+    customer = Customer.find(params[:customer_id])
+    if customer.present?
+      @transaction = Transaction.where(:customer_id => customer.id)
+      render json: @transaction
+    else
+      render json: {error:  "This customer don't have transaction"}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
